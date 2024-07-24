@@ -21,8 +21,8 @@ DEL_ACTIVITY_BEMBER = ["退出", "取消"]
 @plugins.register(
     name="solitaire",
     desc="群内报名接龙",
-    version="0.1",
-    author="Wang Zhechao",
+    version="0.2",
+    author="shiwanli",
     desire_priority=900,
 )
 class Solitaire(Plugin):
