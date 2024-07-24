@@ -14,6 +14,7 @@ SEARCH_ACTIVITY = ["查询", "查询活动"]
 ADD_ACTIVITY = ["创建活动"]
 DEL_ACTIVITY = ["删除活动"]
 ADD_ACTIVITY_MEMBER = ["参加", "报名"]
+HELP_ADD_ACTIVITY_MEMBER = ["代替"]
 DEL_ACTIVITY_BEMBER = ["退出", "取消"]
 
 
@@ -86,7 +87,24 @@ class Solitaire(Plugin):
         elif content[0] in ADD_ACTIVITY_MEMBER:
             reply_text = self.add_member(content[1], nick_name)
             reply_text += self.query_one_activity(content[1])
-
+        # 代替报名活动
+        elif content[0] in HELP_ADD_ACTIVITY_MEMBER:
+            try:
+                # 假设命令格式为 "代替 <代替人名> <活动名称>"
+                if len(content) < 3:
+                    reply_text = "命令格式错误，正确格式：代替 <代替人名> <活动名称>"
+                else:
+                    # 获取代替人名和活动名称
+                    replace_name = content[1]
+                    activity_name = content[2]
+                    # 构造新的nick_name
+                    new_nick_name = f"{nick_name}+{replace_name}"
+                    # 使用新的nick_name进行报名
+                    reply_text = self.add_member(activity_name, new_nick_name)
+                    reply_text += self.query_one_activity(activity_name)
+            except Exception as e:
+                reply_text = f"代替报名失败：{e}"
+                logger.error(f"[Solitaire] ERROR: {e}")
         # 退出活动
         elif content[0] in DEL_ACTIVITY_BEMBER:
             reply_text = self.delete_member(content[1], nick_name)
@@ -116,6 +134,7 @@ class Solitaire(Plugin):
         )
         help_text += "[删除单个活动]：删除活动 <活动名称>\n"
         help_text += "[参加单个活动]：参加/报名 <活动名称>\n"
+        help_text += "[代替报名参加单个活动]：代替 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         return help_text
 
