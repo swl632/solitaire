@@ -113,7 +113,7 @@ class Solitaire(Plugin):
                 reply_text = f"代替报名失败：{e}"
                 logger.error(f"[Solitaire] ERROR: {e}")
         # 退出活动
-        elif content[0] in DEL_ACTIVITY_BEMBER:
+        elif content[0] in HELP_DEL_ACTIVITY_BEMBER:
             # reply_text = self.delete_member(content[1], nick_name)
             # reply_text += self.query_one_activity(content[1])
             try:
@@ -139,7 +139,7 @@ class Solitaire(Plugin):
                 reply_text = f"代替报名失败：{e}"
                 logger.error(f"[Solitaire] ERROR: {e}")
 
-        elif content[0] in HELP_DEL_ACTIVITY_BEMBER:
+        elif content[0] in DEL_ACTIVITY_BEMBER:
 
             reply_text = self.delete_member(content[1], nick_name)
             reply_text += self.query_one_activity(content[1])
