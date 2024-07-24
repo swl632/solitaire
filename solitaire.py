@@ -16,12 +16,13 @@ DEL_ACTIVITY = ["删除活动"]
 ADD_ACTIVITY_MEMBER = ["参加", "报名"]
 HELP_ADD_ACTIVITY_MEMBER = ["代替"]
 DEL_ACTIVITY_BEMBER = ["退出", "取消"]
+HELP_DEL_ACTIVITY_BEMBER = ["代替退出", "代替取消"]
 
 
 @plugins.register(
     name="solitaire",
     desc="群内报名接龙",
-    version="0.2",
+    version="0.3",
     author="shiwanli",
     desire_priority=900,
 )
@@ -98,18 +99,50 @@ class Solitaire(Plugin):
                     replace_name = content[1]
                     activity_name = content[2]
                     # 构造新的nick_name
-                    new_nick_name = f"{nick_name}+{replace_name}"
-                    # 使用新的nick_name进行报名
-                    reply_text = self.add_member(activity_name, new_nick_name)
-                    reply_text += self.query_one_activity(activity_name)
+                    # 检查nick_name是否具有代替权限
+                    if nick_name in ["石万里", "天天", "玟 爱米粒"]:
+                        new_nick_name = f"{nick_name}+{replace_name}"
+                        # 使用新的nick_name进行报名
+                        reply_text = self.add_member(activity_name, new_nick_name)
+                        reply_text += self.query_one_activity(activity_name)
+                    else:
+                        # 如果没有代替权限，打印错误信息
+                        print("没有替代权限")
+                        reply_text = "没有替代权限"
             except Exception as e:
                 reply_text = f"代替报名失败：{e}"
                 logger.error(f"[Solitaire] ERROR: {e}")
         # 退出活动
         elif content[0] in DEL_ACTIVITY_BEMBER:
+            # reply_text = self.delete_member(content[1], nick_name)
+            # reply_text += self.query_one_activity(content[1])
+            try:
+                # 假设命令格式为 "代替 <代替人名> <活动名称>"
+                if len(content) < 3:
+                    reply_text = "命令格式错误，正确格式：代替退出/代替取消 <代替人名> <活动名称>"
+                else:
+                    # 获取代替人名和活动名称
+                    replace_name = content[1]   #代替人名
+                    activity_name = content[2]  #代替活动
+                    # 构造新的nick_name
+                    # 检查nick_name是否具有代替权限
+                    if nick_name in ["石万里", "天天", "玟 爱米粒"]:
+                        new_nick_name = f"{nick_name}+{replace_name}"
+                        # 使用新的nick_name进行取消报名
+                        reply_text = self.delete_member(activity_name, new_nick_name)
+                        reply_text += self.query_one_activity(activity_name)
+                    else:
+                        # 如果没有代替权限，打印错误信息
+                        print("没有替代权限")
+                        reply_text = "没有替代权限"
+            except Exception as e:
+                reply_text = f"代替报名失败：{e}"
+                logger.error(f"[Solitaire] ERROR: {e}")
+
+        elif content[0] in HELP_DEL_ACTIVITY_BEMBER:
+
             reply_text = self.delete_member(content[1], nick_name)
             reply_text += self.query_one_activity(content[1])
-
         else:
             reply_flag = "pass"
 
@@ -136,6 +169,7 @@ class Solitaire(Plugin):
         help_text += "[参加单个活动]：参加/报名 <活动名称>\n"
         help_text += "[代替报名参加单个活动]：代替 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
+        help_text += "[代替退出单个活动]：代替退出/代替取消 <代替人名> <活动名称>\n"
         return help_text
 
     def query_all_activity(self):
