@@ -41,7 +41,7 @@ class Solitaire(Plugin):
             nick_name = e_context["context"]["msg"].actual_user_nickname
         else:
             nick_name = e_context["context"]["msg"].from_user_nickname
-        content_all = e_context["context"]
+        content_all = e_context
         logger.debug(f"======================================================================={content_all}")
         content = e_context["context"].content.strip()
         logger.debug(f"[Solitaire] on_handle_context. content:{content}")
