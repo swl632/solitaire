@@ -153,6 +153,7 @@ class Solitaire(Plugin):
             e_context["reply"] = reply
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
+        
     def get_help_text(self, **kwargs):
         help_text = "群接龙\n"
         help_text += "[查询所有活动]：查询所有活动\n"
@@ -165,7 +166,6 @@ class Solitaire(Plugin):
         help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
-        help_text +=  e_context["context"].get("group_name")  # 假设群名称存储在 group_name 键中
         help_text += "==============================================================\n"
         return help_text
 
