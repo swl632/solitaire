@@ -22,7 +22,7 @@ HELP_DEL_ACTIVITY_BEMBER = ["代退出", "代取消"]
 @plugins.register(
     name="solitaire",
     desc="群内报名接龙",
-    version="0.2.2",
+    version="0.2.3",
     author="shiwanli",
     desire_priority=900,
 )
@@ -165,10 +165,7 @@ class Solitaire(Plugin):
         help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
-        group_name = e_context["context"].get("group_name")  # 假设群名称存储在 group_name 键中
-        if group_name:
-            print(f"这个消息是在微信群 {group_name} 发出来的")
-        help_text +=  group_name
+        help_text +=  e_context["context"].get("group_name")  # 假设群名称存储在 group_name 键中
         help_text += "==============================================================\n"
         return help_text
 
