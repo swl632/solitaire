@@ -165,7 +165,8 @@ class Solitaire(Plugin):
         help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
-        help_text += group_name
+        help_text +=  group_name
+        help_text += "==============================================================\n"
         return help_text
 
     def query_all_activity(self):
