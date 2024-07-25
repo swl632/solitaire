@@ -138,37 +138,6 @@ class Solitaire(Plugin):
             except Exception as e:
                 reply_text = f"代取消失败：{e}"
                 logger.error(f"[Solitaire] ERROR: {e}")
-
-        # # 超级退出活动
-        # elif content[0] in ADMIN_DEL_ACTIVITY_BEMBER:
-        #     # reply_text = self.delete_member(content[1], nick_name)
-        #     # reply_text += self.query_one_activity(content[1])
-        #     try:
-        #         # 假设命令格式为 "代替 <代替人名> <活动名称>"
-        #         if len(content) < 3:
-        #             reply_text = "命令格式错误，正确格式：超级取消 <取消人名> <活动名称>"
-        #         else:
-        #             # 获取代替人名和活动名称
-        #             replace_name = content[1]   #代替人名
-        #             activity_name = content[2]  #代替活动
-        #             # 构造新的nick_name
-        #             # 检查nick_name是否具有代替权限
-        #             if nick_name in ["石万里", "天天", "玟 爱米粒"]:
-        #                 new_nick_name = f"{replace_name}"
-        #                 # 使用新的nick_name进行取消报名
-        #                 reply_text = self.delete_member(activity_name, new_nick_name)
-        #                 reply_text += self.query_one_activity(activity_name)
-        #             else:
-        #                 # 如果没有代替权限，打印错误信息
-        #                 print("没有超级取消权限")
-        #                 reply_text = "没有超级取消权限"
-        #     except Exception as e:
-        #         reply_text = f"超级取消失败：{e}"
-        #         logger.error(f"[Solitaire] ERROR: {e}")
-        # elif content[0] in DEL_ACTIVITY_BEMBER:
-        # 
-        #     reply_text = self.delete_member(content[1], nick_name)
-        #     reply_text += self.query_one_activity(content[1])
         else:
             reply_flag = "pass"
 
@@ -196,6 +165,7 @@ class Solitaire(Plugin):
         help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
+        help_text += group_name
         return help_text
 
     def query_all_activity(self):
