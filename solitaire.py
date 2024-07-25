@@ -41,8 +41,8 @@ class Solitaire(Plugin):
             nick_name = e_context["context"]["msg"].actual_user_nickname
         else:
             nick_name = e_context["context"]["msg"].from_user_nickname
-        content_all = e_context
-        logger.debug(f"======================================================================={content_all}")
+        logger.debug(f"======================================================================={e_context["context"]}")
+        logger.debug(f"======================================================================={e_context["context"]["msg"]}")
         content = e_context["context"].content.strip()
         logger.debug(f"[Solitaire] on_handle_context. content:{content}")
         content = content.split()
@@ -140,6 +140,10 @@ class Solitaire(Plugin):
             except Exception as e:
                 reply_text = f"代取消失败：{e}"
                 logger.error(f"[Solitaire] ERROR: {e}")
+                # 退出活动
+        elif content[0] in DEL_ACTIVITY_BEMBER:
+            reply_text = self.delete_member(content[1], nick_name)
+            reply_text += self.query_one_activity(content[1])
         else:
             reply_flag = "pass"
 
