@@ -154,7 +154,15 @@ class Solitaire(Plugin):
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
         
-    def get_help_text(self, **kwargs):
+    def get_help_text(self, ctype: ContextType, content, **kwargs):
+        context = Context(ctype, content)
+        context.kwargs = kwargs
+        if "origin_ctype" not in context:
+            context["origin_ctype"] = ctype
+        cmsg = context["msg"]
+        if context.get("isgroup", False):
+            group_name = cmsg.other_user_nickname
+        logger.debug(f"No need reply, groupName not in whitelist, group_name={group_name}")
         help_text = "群接龙\n"
         help_text += "[查询所有活动]：查询所有活动\n"
         help_text += "[查询单个活动]: 查询活动 <活动名称>\n"
@@ -166,8 +174,24 @@ class Solitaire(Plugin):
         help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
         help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
+        help_text += group_name
         help_text += "==============================================================\n"
         return help_text
+
+    # def get_help_text(self, **kwargs):
+    #     help_text = "群接龙\n"
+    #     help_text += "[查询所有活动]：查询所有活动\n"
+    #     help_text += "[查询单个活动]: 查询活动 <活动名称>\n"
+    #     help_text += (
+    #         "[创建单个活动]: 创建活动 活动名称：<活动名称> 活动描述：<活动描述> 活动人数：<活动人数>\n"
+    #     )
+    #     help_text += "[删除单个活动]：删除活动 <活动名称>\n"
+    #     help_text += "[参加单个活动]：参加/报名 <活动名称>\n"
+    #     help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
+    #     help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
+    #     help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
+    #     help_text += "==============================================================\n"
+    #     return help_text
 
     def query_all_activity(self):
         reply_text = "\n"
