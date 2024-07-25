@@ -32,6 +32,7 @@ class Solitaire(Plugin):
         self.activity = ActivityDB()
         self.handlers[Event.ON_HANDLE_CONTEXT] = self.on_handle_context
 
+
     def on_handle_context(self, e_context: EventContext):
         if e_context["context"].type != ContextType.TEXT:
             return
@@ -40,7 +41,8 @@ class Solitaire(Plugin):
             nick_name = e_context["context"]["msg"].actual_user_nickname
         else:
             nick_name = e_context["context"]["msg"].from_user_nickname
-
+        content_all = e_context["context"]
+        logger.debug(f"======================================================================={content_all}")
         content = e_context["context"].content.strip()
         logger.debug(f"[Solitaire] on_handle_context. content:{content}")
         content = content.split()
@@ -154,15 +156,7 @@ class Solitaire(Plugin):
             e_context.action = EventAction.BREAK_PASS  # 事件结束，并跳过处理context的默认逻辑
 
         
-    def get_help_text(self, ctype: ContextType, content, **kwargs):
-        context = Context(ctype, content)
-        context.kwargs = kwargs
-        if "origin_ctype" not in context:
-            context["origin_ctype"] = ctype
-        cmsg = context["msg"]
-        if context.get("isgroup", False):
-            group_name = cmsg.other_user_nickname
-        logger.debug(f"No need reply, groupName not in whitelist, group_name={group_name}")
+    def get_help_text(self, **kwargs):
         help_text = "群接龙\n"
         help_text += "[查询所有活动]：查询所有活动\n"
         help_text += "[查询单个活动]: 查询活动 <活动名称>\n"
