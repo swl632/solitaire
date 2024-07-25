@@ -22,7 +22,7 @@ HELP_DEL_ACTIVITY_BEMBER = ["代退出", "代取消"]
 @plugins.register(
     name="solitaire",
     desc="群内报名接龙",
-    version="0.2.3",
+    version="0.2.4",
     author="shiwanli",
     desire_priority=900,
 )
