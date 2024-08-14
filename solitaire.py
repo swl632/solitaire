@@ -22,7 +22,7 @@ HELP_DEL_ACTIVITY_BEMBER = ["代退出", "代取消"]
 @plugins.register(
     name="solitaire",
     desc="群内报名接龙",
-    version="0.2.4",
+    version="0.2.5",
     author="shiwanli",
     desire_priority=900,
 )
@@ -174,21 +174,6 @@ class Solitaire(Plugin):
         help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
         help_text += "==============================================================\n"
         return help_text
-
-    # def get_help_text(self, **kwargs):
-    #     help_text = "群接龙\n"
-    #     help_text += "[查询所有活动]：查询所有活动\n"
-    #     help_text += "[查询单个活动]: 查询活动 <活动名称>\n"
-    #     help_text += (
-    #         "[创建单个活动]: 创建活动 活动名称：<活动名称> 活动描述：<活动描述> 活动人数：<活动人数>\n"
-    #     )
-    #     help_text += "[删除单个活动]：删除活动 <活动名称>\n"
-    #     help_text += "[参加单个活动]：参加/报名 <活动名称>\n"
-    #     help_text += "[代报名参加单个活动]：代参加/代报名 <代替人名> <活动名称>\n"
-    #     help_text += "[退出单个活动]：退出/取消 <活动名称>\n"
-    #     help_text += "[代退出单个活动]：代退出/代取消 <代替人名> <活动名称>\n"
-    #     help_text += "==============================================================\n"
-    #     return help_text
 
     def query_all_activity(self):
         reply_text = "\n"
